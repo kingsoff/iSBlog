@@ -125,7 +125,12 @@ class SiteController extends Controller
     {
         return $this->render('about');
     }
-    public function actionHello2(){
-        return 'Hello, world2!';
+    public function actionView()
+    {
+        return $this->render('single');
+    }
+    public function actionCategory()
+    {
+        return $this->render('category');
     }
 }
