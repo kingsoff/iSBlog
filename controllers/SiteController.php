@@ -2,10 +2,13 @@
 
 namespace app\controllers;
 
+use app\models\Article;
+use app\models\Category;
+use app\models\CommentForm;
 use Yii;
+use yii\data\Pagination;
 use yii\filters\AccessControl;
 use yii\web\Controller;
-use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
@@ -61,7 +64,16 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $query = Article::find();
+        $count = $query->count();
+        $pagination = new Pagination(['totalCount'=> $count, 'pageSize'=>1]);
+        $articles = $query->offset($pagination->offset)
+            ->limit($pagination->limit)
+            ->all();
+        return $this->render('index',[
+            'articles'=>$articles,
+            'pagination'=>$pagination
+        ]);   
     }
 
     /**
