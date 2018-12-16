@@ -16,7 +16,7 @@ use app\models\ContactForm;
 class SiteController extends Controller
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function behaviors()
     {
@@ -42,7 +42,7 @@ class SiteController extends Controller
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function actions()
     {
@@ -64,11 +64,10 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $data = Article::getAll(1);
+        $data = Article::getAll(5);
         $popular = Article::getPopular();
         $recent = Article::getRecent();
-        $categories = Category::getAll(1);
-
+        $categories = Category::getAll();
         
         return $this->render('index',[
             'articles'=>$data['articles'],
@@ -76,92 +75,28 @@ class SiteController extends Controller
             'popular'=>$popular,
             'recent'=>$recent,
             'categories'=>$categories
-        ]);   
+        ]);
     }
+    
     public function actionView($id)
     {
         $article = Article::findOne($id);
         $popular = Article::getPopular();
         $recent = Article::getRecent();
         $categories = Category::getAll();
-        //$comments = $article->getArticleComments();
-        //$commentForm = new CommentForm();
-
-        //$article->viewedCounter();
+    
         
         return $this->render('single',[
             'article'=>$article,
             'popular'=>$popular,
             'recent'=>$recent,
             'categories'=>$categories,
-            //'comments'=>$comments,
-            //'commentForm'=>$commentForm
         ]);
     }
-
-    /**
-     * Login action.
-     *
-     * @return Response|string
-     */
-    public function actionLogin()
-    {
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
-        }
-
-        $model->password = '';
-        return $this->render('login', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Logout action.
-     *
-     * @return Response
-     */
-    public function actionLogout()
-    {
-        Yii::$app->user->logout();
-
-        return $this->goHome();
-    }
-
-    /**
-     * Displays contact page.
-     *
-     * @return Response|string
-     */
-    public function actionContact()
-    {
-        $model = new ContactForm();
-        if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
-            Yii::$app->session->setFlash('contactFormSubmitted');
-
-            return $this->refresh();
-        }
-        return $this->render('contact', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Displays about page.
-     *
-     * @return string
-     */
-    public function actionAbout()
-    {
-        return $this->render('about');
-    }
+    
     public function actionCategory($id)
     {
+
         $data = Category::getArticlesByCategory($id);
         $popular = Article::getPopular();
         $recent = Article::getRecent();
@@ -175,4 +110,6 @@ class SiteController extends Controller
             'categories'=>$categories
         ]);
     }
+
+   
 }
