@@ -195,7 +195,7 @@ PublicAsset::register($this);
             <div class="row">
                 <div class="col-md-12">
                     <div class="text-center">&copy; 2018 <a href="#">Treasure PRO, </a> Built with <i
-                            class="fa fa-heart"></i> by <a href="#">Rahim</a>
+                            class="fa fa-heart"></i> by <a href="#">Dimitr</a>
                     </div>
                 </div>
             </div>
