@@ -84,7 +84,7 @@ class SiteController extends Controller
         $popular = Article::getPopular();
         $recent = Article::getRecent();
         $categories = Category::getAll();
-    
+        //$comments = $article->getArticleComments();
         
         return $this->render('single',[
             'article'=>$article,

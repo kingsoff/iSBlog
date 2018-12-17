@@ -65,7 +65,11 @@ class Article extends \yii\db\ActiveRecord
             'category_id' => 'Category ID',
         ];
     }
-
+    public function saveArticle()
+    {
+        $this->user_id = Yii::$app->user->id;
+        return $this->save(false);
+    }
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -171,4 +175,8 @@ class Article extends \yii\db\ActiveRecord
     {
         return Article::find()->orderBy('date asc')->limit(4)->all();
     }
+     /* public function getComments()
+    {
+        return $this->hasMany(Comment::className(), ['article_id'=>'id']);
+    }  */
 }
